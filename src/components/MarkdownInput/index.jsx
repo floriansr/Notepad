@@ -5,15 +5,7 @@ import NoteDisplay from "components/NoteDisplay";
 const MarkdownInput = () => {
 	const [value, setValue] = useState("");
 	const [title, setTitle] = useState("");
-	const [notes, setNotes] = useState([
-		{
-			id: "",
-		},
-		{
-			tit: "",
-		},
-		{ description: "" },
-	]);
+	const [notes, setNotes] = useState([]);
 
 	useEffect(() => {
 		console.log("Component is Update");
@@ -33,27 +25,33 @@ const MarkdownInput = () => {
 		if (value === "" || title === "") {
 			console.log("not ok");
 		} else {
-			console.log("ok");
-			localStorage.clear();
-
 			localStorage.setItem(title, value);
-			console.log(localStorage);
 
-			for (let i = 0; i < localStorage.length; i++) {
-				console.log(
-					// i = id
-					localStorage.key(i), // = tit
-					localStorage.getItem(localStorage.key(i)) // = description
-				);
+			console.log(localStorage.length);
+
+			for (let i = 0; i <= localStorage.length; i++) {
+				let t = localStorage.key(i);
+				let d = localStorage.getItem(localStorage.key(i));
+
+				const NewObject = [
+					{
+						id: i,
+						title: t,
+						description: d,
+					},
+				];
+
+				setNotes((notes) => notes.concat(NewObject));
+
+				// localStorage.clear();
 			}
-			// setSubmit(true);
+			console.log(notes);
 		}
 	};
 
 	return (
 		<>
 			<NoteDisplay value={value} title={title} />
-
 			<form onSubmit={saveForm}>
 				<label>
 					<input
@@ -75,10 +73,10 @@ const MarkdownInput = () => {
 
 				<input type="submit" value="Save me" />
 			</form>
-
 			{notes.map((note, key) => (
 				<div key={key}>
-					{note.id} {note.tit} {note.description}
+					<h3>{note.title}</h3>
+					<p>{note.description}</p>
 				</div>
 			))}
 		</>
@@ -87,29 +85,4 @@ const MarkdownInput = () => {
 
 export default MarkdownInput;
 
-// {isSubmit ? MarkdownInput() : ""}
-
-// const [isToggleOn, setToggle] = useState(false);
-
-// const getName = () => {
-// 	isToggleOn ? setToggle(false) : setToggle(true);
-// };
-
-// {isToggleOn ? (
-// 	<>
-// 		<label>
-// 			<input
-// 				type="submit"
-// 				name={title}
-// 				onChange={changeTitle}
-// 				placeholder="put name here.."
-// 			/>
-// 		</label>
-// 	</>
-// ) : (
-// 	""
-// )}
-
-// <button type="button" onClick={getName}>
-// 	name me
-// </button>
+// //reinitialiser avant map
