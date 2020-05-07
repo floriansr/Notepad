@@ -1,7 +1,26 @@
-import React from "react";
+import "assets/scss/styles.scss";
+
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+
+import MarkdownInput from "components/MarkdownInput";
+
 import * as serviceWorker from "./serviceWorker";
+
+class App extends Component {
+	constructor() {
+		super();
+		this.state = {};
+	}
+
+	render() {
+		return (
+			<>
+				<MarkdownInput />
+			</>
+		);
+	}
+}
 
 ReactDOM.render(
 	<React.StrictMode>
