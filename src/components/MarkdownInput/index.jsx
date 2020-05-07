@@ -26,26 +26,17 @@ const MarkdownInput = () => {
 			console.log("not ok");
 		} else {
 			localStorage.setItem(title, value);
+			const i = localStorage.length;
+			const NewObject = [
+				{
+					id: i,
+					title: title,
+					description: value,
+				},
+			];
+			// localStorage.clear();
 
-			console.log(localStorage.length);
-
-			for (let i = 0; i <= localStorage.length; i++) {
-				let t = localStorage.key(i);
-				let d = localStorage.getItem(localStorage.key(i));
-
-				const NewObject = [
-					{
-						id: i,
-						title: t,
-						description: d,
-					},
-				];
-
-				setNotes((notes) => notes.concat(NewObject));
-
-				// localStorage.clear();
-			}
-			console.log(notes);
+			setNotes(notes.concat(NewObject));
 		}
 	};
 
@@ -74,15 +65,21 @@ const MarkdownInput = () => {
 				<input type="submit" value="Save me" />
 			</form>
 			{notes.map((note, key) => (
-				<div key={key}>
+				<button
+					key={key}
+					onClick={() =>
+						NoteDisplay({
+							value: note.description,
+							title: note.title,
+						})
+					}
+				>
 					<h3>{note.title}</h3>
-					<p>{note.description}</p>
-				</div>
+					<p>{note.description.substring(0, 10)}...</p>
+				</button>
 			))}
 		</>
 	);
 };
 
 export default MarkdownInput;
-
-// //reinitialiser avant map
